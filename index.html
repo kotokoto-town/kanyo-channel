@@ -117,7 +117,7 @@ aside{display:flex;flex-direction:column;gap:12px;min-width:0}
             <div class="ovbtns"><button class="again" id="again" hidden>▶ もう一回</button><button class="again next" id="nextBtn" hidden>⏭ つぎの動画</button></div></div></div>
           <div class="bar"><i id="prog"></i></div>
         </div>
-        <div class="ticker stop" id="ticker"><span class="live">LIVE</span><div class="run"><b id="tickText">かんよチャンネルへようこそ！</b></div><button class="tbtn" id="stopBtn" hidden>⏹ とめる</button><button class="tbtn" id="sound">🔊 音あり</button></div>
+        <div class="ticker stop" id="ticker"><span class="live">LIVE</span><div class="run"><b id="tickText">かんよチャンネルへようこそ！</b></div><button class="tbtn" id="skipBtn" hidden>⏭ つぎの話</button><button class="tbtn" id="stopBtn" hidden>⏹ とめる</button><button class="tbtn" id="sound">🔊 音あり</button></div>
       </div>
       <div class="np">
         <h2 id="nowTitle">まだ動画をえらんでいません</h2>
@@ -626,7 +626,7 @@ const OLD4=[
 ];
 
 /* ================= 動画リスト（31本） ================= */
-const CATS=[["all","ぜんぶ"],["battle","⚔️ バトル"],["space","🚀 うちゅう"],["food","🍖 グルメ"],["funny","🤣 おもしろ"],["animal","🦖 いきもの"],["ride","🏎️ のりもの"],["race","🏁 レース"]];
+const CATS=[["all","ぜんぶ"],["battle","⚔️ バトル"],["space","🚀 うちゅう"],["food","🍖 グルメ"],["funny","🤣 おもしろ"],["animal","🦖 いきもの"],["ride","🏎️ のりもの"],["race","🏁 レース"],["adventure","🗺️ ぼうけん"],["event","🎉 イベント"]];
 const SKYS={night:{bg:["#2E3FA0","#060A1E"],stars:true},space:{bg:["#1A0838","#000"],stars:true},day:{bgl:["#76C8FF","#E8F7FF"]},sunset:{bgl:["#FF9A6B","#6A3BD6"]},
   sea:{bgl:["#76C8FF","#1E6FB8"],scene:T=>{ctx.save();for(let k=0;k<3;k++){ctx.fillStyle=["#2D8BD9","#1E6FB8","#155A9A"][k];ctx.beginPath();ctx.moveTo(-80,H);for(let x=-80;x<=W+80;x+=40)ctx.lineTo(x,640+k*80+Math.sin(x/80+T*3+k)*16);ctx.lineTo(W+80,H);ctx.fill()}ctx.restore()}},
   road:{bgl:["#76C8FF","#E8F7FF"],scene:T=>{ctx.save();ctx.fillStyle="#4A4F5E";ctx.fillRect(-80,620,W+160,300);ctx.fillStyle="#fff";for(let x=-200;x<W+200;x+=240)ctx.fillRect(((x-T*1600)%(W+400)+W+400)%(W+400)-200,760,140,16);ctx.fillStyle="#7FD47A";ctx.fillRect(-80,580,W+160,40);ctx.restore()}},
@@ -1087,9 +1087,208 @@ const OMAKE=[
  ()=>appear({bgl:["#9FC2FF","#1E2340"],cap:"おまけ：ロボットダンス",size:80,col:"#fff",stroke:"#2D6BFF",sfx:SFX.robot,d:3,cast:[{a:ROBOT,x:600,y:540,s:.7,bob:true},{a:ROBOT_R,x:1000,y:540,s:.7,bob:true,say:"ピピッ♪"}],spark:"#FFE14D"}),
  ()=>appear({bgl:["#C2FFDF","#7FD47A"],cap:"おまけ：恐竜の あくび",size:80,col:"#fff",stroke:"#2B8A3E",sfx:SFX.roar,d:3,cast:[{a:DINO_R,x:800,y:560,s:.9,m:{roar:true},say:"ふぁ〜〜あ"}]})];
 
+
+/* ================= 新シリーズ用の小道具 ================= */
+function chest(x,y,s,T,m){ctx.save();ctx.translate(x,y);ctx.scale(s,s);L();
+  if(m.open){ctx.save();ctx.globalAlpha=.55;ctx.fillStyle="#FFE14D";for(let i=0;i<10;i++){ctx.save();ctx.rotate((i-4.5)*.18+Math.sin(T*3)*.03);ctx.fillRect(-12,-40,24,-420);ctx.restore()}ctx.restore()}
+  box(-200,-40,400,200,"#9A5F2E",16);box(-200,-40,400,40,"#FFC928",6);box(-30,-40,60,80,"#FFC928",8);circ(0,10,10,"#1E2340",false);
+  ctx.save();if(m.open){ctx.translate(0,-40);ctx.scale(1,-.5);ctx.translate(0,40)}ctx.fillStyle="#A66A35";ctx.beginPath();ctx.moveTo(-200,-40);ctx.quadraticCurveTo(0,-200,200,-40);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();ctx.restore()}
+function mapScroll(x,y,s,T){ctx.save();ctx.translate(x,y);ctx.scale(s,s);L(6);box(-300,-190,600,380,"#F2E2B8",10);ctx.save();ctx.setLineDash([18,14]);ctx.strokeStyle="#C8261A";ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(-230,120);ctx.quadraticCurveTo(-80,-140,40,40);ctx.quadraticCurveTo(140,160,190,-80);ctx.stroke();ctx.restore();ctx.strokeStyle="#C8261A";ctx.lineWidth=14;ctx.beginPath();ctx.moveTo(160,-110);ctx.lineTo(220,-50);ctx.moveTo(220,-110);ctx.lineTo(160,-50);ctx.stroke();ctx.fillStyle="#3FA34D";ctx.beginPath();ctx.ellipse(-150,-60,70,40,0,0,TAU);ctx.fill();ctx.fillStyle="#7FD4FF";ctx.beginPath();ctx.ellipse(60,110,90,35,0,0,TAU);ctx.fill();ctx.restore()}
+function snowman(x,y,s,T,m){ctx.save();ctx.translate(x,y);ctx.scale(s,s);L();circ(0,120,130,"#fff");circ(0,-60,90,"#fff");eyes(32,-75,m.mood||"normal",14);ctx.fillStyle="#FF8A3D";ctx.beginPath();ctx.moveTo(0,-55);ctx.lineTo(70,-45);ctx.lineTo(0,-38);ctx.closePath();ctx.fill();ctx.stroke();box(-75,-160,150,24,"#1E2340",4);box(-50,-240,100,84,"#1E2340",6);[60,120,180].forEach(yy=>circ(0,yy-30,9,"#1E2340",false));ctx.restore()}
+const CHEST=mk(chest),MAP=mk(mapScroll),SNOWMAN=mk(snowman);
+const COIN={draw:(x,y,s)=>{L(4);circ(x,y,32*s,"#FFC928");ctx.fillStyle="#FFF6B0";ctx.beginPath();ctx.arc(x,y,17*s,0,TAU);ctx.fill()}};
+const SNOWBALL={draw:(x,y,s)=>{L(4);circ(x,y,28*s,"#fff")}};
+const ISLAND=T=>{SKYS.sea.scene(T);L(6);ctx.fillStyle="#F2D58A";ctx.beginPath();ctx.ellipse(1100,700,340,100,0,Math.PI,TAU);ctx.fill();ctx.stroke();ctx.strokeStyle="#7A4A1A";ctx.lineWidth=18;ctx.beginPath();ctx.moveTo(1170,620);ctx.quadraticCurveTo(1190,480,1150,400);ctx.stroke();ctx.fillStyle="#3FA34D";for(let i=0;i<5;i++){ctx.save();ctx.translate(1150,400);ctx.rotate(i*1.25+Math.sin(T*2)*.05);ctx.beginPath();ctx.ellipse(70,0,85,22,0,0,TAU);ctx.fill();ctx.restore()}};
+const JUNGLE=T=>{ctx.fillStyle="#2B8A3E";for(let i=0;i<9;i++){ctx.beginPath();ctx.ellipse(i*200,820+Math.sin(i)*30,170,120,0,0,TAU);ctx.fill()}ctx.fillStyle="#6B4A3A";ctx.beginPath();ctx.moveTo(1100,700);ctx.lineTo(1300,330);ctx.lineTo(1400,330);ctx.lineTo(1600,700);ctx.fill();ctx.fillStyle="#FF4A3D";ctx.beginPath();ctx.ellipse(1350,330,50,14,0,0,TAU);ctx.fill();if(R()<.2)spawn(1,()=>({x:1350,y:320,vx:rr(-30,30),vy:-80,life:2,max:2,size:rr(30,50),col:"rgb(110,100,100)",alpha:.4,grow:1}))};
+const MOUNTAINS=T=>{ctx.fillStyle="#6B4A3A";ctx.beginPath();ctx.moveTo(-80,H);ctx.lineTo(300,420);ctx.lineTo(650,H);ctx.fill();ctx.beginPath();ctx.moveTo(900,H);ctx.lineTo(1300,380);ctx.lineTo(1700,H);ctx.fill();ctx.fillStyle="#fff";ctx.beginPath();ctx.moveTo(300,420);ctx.lineTo(250,500);ctx.lineTo(350,500);ctx.fill();ctx.beginPath();ctx.moveTo(1300,380);ctx.lineTo(1240,470);ctx.lineTo(1360,470);ctx.fill()};
+const SNOWGROUND=T=>{ctx.fillStyle="#fff";ctx.beginPath();ctx.ellipse(800,980,1200,260,0,0,TAU);ctx.fill();if(R()<.5)spawn(1,()=>({x:rr(0,W),y:-30,vx:rr(-40,40),vy:rr(80,180),life:6,max:6,size:rr(.2,.4),fn:(x,y,s)=>snowflake(x,y,s*60)}))};
+const MELODY=()=>{[523,587,659,784,659,784,880,784,659,587,523].forEach((f,i)=>tone(f,f,.16,"square",.07,i*.2))};
+const H0of=(h,x,sc=1)=>({a:h.a,x,y:h.sw?600:580,s:(h.s||1.1)*sc,m:h.m||{}});
+const swingOf=h=>h.sw?{a:h.a,x:330,y:690,s:1.4,m:{ang:1.05}}:{a:h.a,x:420,y:580,s:h.s||1,m:h.m||{}};
+function firework(cap,cols,o={}){return appear({...SKYS.night,cap,col:o.col||"#FFE14D",size:o.size||110,d:o.d||2.4,sfx:()=>{for(let i=0;i<5;i++){tone(300,1200,.3,"sine",.06,i*.45);noise(.7,.5,500,i*.45+.3)}},cast:o.cast,scene:T=>{ctx.fillStyle="#140F1E";for(let i=0;i<10;i++)ctx.fillRect(i*170,780-((i*53)%5)*30,140,300)},
+  extra:()=>{if(R()<.09){const x=rr(250,1350),y=rr(160,460),c=pick(cols);spawn(70,()=>{const a=R()*TAU,v=rr(150,520);return{x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,g:80,drag:.96,life:rr(1,1.6),max:1.6,size:rr(4,8),col:c}});flash=Math.max(flash,.12)}}})}
+
+/* ================= 新しいお話（アーク） ================= */
+function training(h){const H0=H0of(h,800);return[
+  appear({bgl:["#FFB46A","#6A3BD6"],scene:MOUNTAINS,cap:`${h.n}、山で しゅぎょう！`,size:84,col:"#fff",stroke:"#6B4A3A",cast:[{...H0,from:"bottom"}]}),
+  zoomPast({a:h.a,m:{...H0.m,ang:h.sw?1.57:0},s:H0.s*.7,bgl:["#FFE0B0","#FF8A3D"],scene:MOUNTAINS,cap:"ダッシュ 100本！",col:"#fff",stroke:"#C8261A",passes:6,d:2.2,y:560,trail:"#fff"}),
+  tower({item:FX.star,h:60,n:100,s:1,bg:["#FFE9A8","#FF8A3D"],cap:"すぶり 100回！",col:"#fff",stroke:"#C8261A",d:2.6}),
+  appear({bgl:["#76C8FF","#1E6FB8"],scene:MOUNTAINS,cap:"たきに うたれる しゅぎょう…",size:80,col:"#fff",stroke:"#1E6FB8",sfx:SFX.splash,d:2.2,cast:[{...H0,shake:3}],extra:()=>{ctx.save();ctx.globalAlpha=.6;ctx.fillStyle="#BFEFFF";ctx.fillRect(680,-20,240,700);ctx.restore();spawn(3,()=>({x:rr(700,900),y:rr(0,200),vx:0,vy:900,life:.6,max:.6,size:rr(5,10),col:"#fff"}))}}),
+  react({a:FACE,cap:"つ、つかれた〜…",bg:["#BFE3FF","#2D6BFF"]}),
+  eat({a:FOOD.ramen,s:1.2,cap:"ラーメンで パワー回復！",col:"#fff",stroke:"#C8261A",crumb:"#FFE07A"}),
+  charge({...H0of(h,420),cap:"あたらしい ひっさつわざ…！",col:h.c,emo:h.e,bolts:5,cast:[{a:MTN,x:1250,y:620,s:.8}]}),
+  beam({...swingOf(h),target:{a:MTN,x:1250,y:620,s:.8},tx:1250,ty:560,cap:`ネオ ${h.big}！！`,size:96,colr:h.c,bg:h.bg}),
+  explode({x:1250,y:560,cap:"岩山 まっぷたつ！！",emo:"⛰️💥"}),
+  victory({cap:"しゅぎょう 完了！",cast:[{...H0,m:{...H0.m,glow:.9}}]})]}
+function treasure(h){const H0=H0of(h,400,.9);return[
+  appear({bgl:["#FFE9A8","#C8A06A"],cap:"たからの地図を 見つけた！",size:84,col:"#fff",stroke:"#7A4A1A",sfx:SFX.magic,cast:[{a:MAP,x:800,y:520,s:1.2,from:"zoom"}],spark:"#FFE14D"}),
+  zoomPast({a:h.a,m:{...H0.m,ang:h.sw?1.57:0},s:H0.s*.7,...SKYS.sea,y:520,cap:"たから島へ しゅっぱつ！",col:"#fff",stroke:"#1E6FB8",passes:2,d:2,trail:"#fff"}),
+  appear({...SKYS.sea,scene:ISLAND,cap:"たから島に とうちゃく！",col:"#FFE14D",stroke:"#1E6FB8",sfx:SFX.splash,cast:[{...H0,x:800,y:430,s:H0.s*.6,from:"top"}]}),
+  appear({...SKYS.sea,scene:ISLAND,cap:"たからの 番人！？",col:"#fff",stroke:"#6A2BD6",sfx:SFX.boo,shake:4,cast:[{a:GHOST,x:1100,y:420,s:.7,m:{mood:"angry"},from:"zoom",say:"ここは とおさないぞ〜"},{...H0,x:420,y:480,s:H0.s*.7}]}),
+  clash({a:h.a,b:GHOST,ma:{...H0.m,ang:h.sw?.9:0},mb:{mood:"angry"},sa:h.sw?.9:H0.s,sb:.8,cap:"たからを かけて 勝負！",col:"#3FA34D"}),
+  appear({...SKYS.sea,scene:ISLAND,cap:"おばけ「まいった〜」",col:"#fff",stroke:"#6A2BD6",sfx:SFX.boing,cast:[{a:GHOST,x:1000,y:420,s:.6,m:{mood:"happy"},say:"たからは どうくつだよ",bob:true}]}),
+  appear({bgl:["#3A2A20","#1A0A05"],cap:"どうくつで たからばこ はっけん！",size:80,col:"#FFE14D",stroke:"#7A4A1A",sfx:SFX.land,focus:true,cast:[{a:CHEST,x:800,y:560,s:1,from:"bottom"}]}),
+  charge({a:CHEST,x:800,y:560,s:1,col:"#FFE14D",cap:"あけるぞ…！",emo:"🗝️",bolts:1,sfx:()=>tone(200,800,1.8,"triangle",.12)}),
+  appear({bgl:["#FFF6B0","#FFB000"],cap:"パカーーン！！",size:150,col:"#fff",stroke:"#C8261A",sfx:()=>{flash=.8;fanfare()},shake:10,cast:[{a:CHEST,x:800,y:600,s:1,m:{open:true}}],extra:()=>{if(R()<.8)sparkles(800,450,3,"#FFE14D",700)}}),
+  rain({item:COIN,isz:1,rate:1,burst:3,bgl:["#FFF6B0","#FFB000"],cap:"金貨が ザクザク！",col:"#fff",stroke:"#C8261A",sfx:()=>{for(let i=0;i<12;i++)tone(1800,2400,.06,"sine",.1,i*.15)},cast:[{a:CHEST,x:800,y:650,s:.8,m:{open:true}}]}),
+  victory({cap:"おたから ゲット！",bgl:["#FFE14D","#FF8A00"],cast:[{...H0,x:550},{a:CHEST,x:1050,y:620,s:.6,m:{open:true}}]})]}
+function cookbattle(f){return[
+  appear({bg:KIT,cap:"料理対決 スタート！",emo:"🍳",col:"#fff",stroke:"#C8261A",sfx:fanfare,cast:[{a:FACE,x:450,y:580,s:.6,from:"left"},{a:BOSS,x:1150,y:520,s:.8,from:"right",say:"ぜったい 勝つ！"}]}),
+  vs({a:FACE,b:BOSS,na:"かんた＆ようた",nb:"コックボス",sa:.6,colA:"#FF8A3D",colB:"#4A2A7A"}),
+  appear({bg:KIT,cap:`お題は… ${f.n}！`,size:110,col:"#FFE14D",stroke:"#C8261A",sfx:SFX.magic,cast:[{a:f.a,x:800,y:560,s:f.s,m:f.m,from:"zoom",spin:.5}]}),
+  appear({bg:["#5A1F4A","#12061E"],cap:"ボスの 料理は…",col:"#fff",sfx:()=>noise(1.5,.3,600),cast:[{a:BOSS,x:800,y:520,s:.8,say:"ひみつの 材料を…"}]}),
+  react({a:FACE,cap:"うんちが 入ってる！？",bg:["#C8FF7A","#5A1F4A"]}),
+  charge({a:FACE,y:580,s:.85,col:"#FFE14D",cap:"ひっさつ 料理わざ！",emo:"🔥🍳🔥",bolts:3,m:{mood:"angry"}}),
+  zoomPast({a:f.a,m:f.m,s:f.s*.6,bg:["#FFB46A","#C8261A"],cap:"トントン！ジュージュー！",size:90,col:"#fff",stroke:"#C8261A",passes:6,d:2.2,y:560,trail:"#FFE14D"}),
+  tower({item:f.a,im:f.m,h:f.h,s:f.ts,n:15,bg:KIT,cap:"かんせい！ 山もり！",col:"#fff",stroke:"#C8261A"}),
+  appear({bgl:["#9FC2FF","#1E2340"],cap:"しんさいん ロボの 試食…",size:84,col:"#fff",stroke:"#2D6BFF",sfx:SFX.robot,cast:[{a:ROBOT,x:800,y:540,s:.8,say:"ピピピ…ブンセキチュウ"}]}),
+  appear({bgl:["#9FC2FF","#1E2340"],cap:"ボスの 料理を たべたら…",size:84,col:"#fff",sfx:()=>{SFX.robot();noise(.8,.5,300,.6)},cast:[{a:ROBOT,x:800,y:540,s:.8,m:{mood:"scared",broken:true},shake:8,say:"ガガガ…マズイ…"}]}),
+  eat({a:f.a,m:f.m,s:f.s,cap:"こっちの 料理は… パクッ！",col:"#fff",stroke:"#C8261A",crumb:f.cr,bg:["#9FC2FF","#2D6BFF"]}),
+  yum({cap:"100点まんてん！ 優勝！",side:f.a,ss:f.s*.4,sm:f.m})]}
+const PARTY_THEMES=[{t:"おたんじょうび",bg:["#FFE9F2","#FF9BB0"],it:FX.heart,e:"🎂"},{t:"ハロウィン",bg:["#FFB46A","#3A2A5A"],it:FX.star,e:"🎃"},{t:"クリスマス",bg:["#BFF0FF","#C8261A"],it:FX.snow,e:"🎄"},{t:"おつかれさま",bg:["#FFE9A8","#FF8A3D"],it:COIN,e:"🎊"}];
+function party(th,f){return[
+  appear({bgl:th.bg,cap:`きょうは ${th.t} パーティー！`,size:84,emo:th.e,col:"#fff",stroke:"#FF4A7A",sfx:fanfare,cast:[{a:FOOD.cake,x:800,y:580,s:.9,m:{candles:5},from:"bottom"}],extra:()=>{if(R()<.3)confetti(2)}}),
+  appear({bgl:th.bg,cap:"ともだちが きた！",col:"#fff",stroke:"#FF4A7A",sfx:SFX.boing,cast:[{a:CAT,x:300,y:560,s:.5,from:"left",bob:true},{a:GHOST,x:650,y:500,s:.5,from:"top",delay:.1,bob:true,m:{mood:"happy"}},{a:ROBOT,x:1000,y:540,s:.5,from:"bottom",delay:.2,bob:true},{a:DINO_R,x:1320,y:560,s:.42,from:"right",delay:.3,bob:true,m:{mood:"happy"},say:"ガオ〜♪",sx:1250}]}),
+  appear({bgl:th.bg,cap:"みんなで ダンス！",size:110,col:"#FFE14D",stroke:"#FF4A7A",sfx:MELODY,d:2.4,cast:[{a:CAT,x:300,y:560,s:.5,bob:true,spin:1.5},{a:GHOST,x:650,y:500,s:.5,bob:true,m:{mood:"happy"},spin:-2},{a:ROBOT,x:1000,y:540,s:.5,bob:true},{a:UNCHI,x:1320,y:560,s:.4,bob:true,spin:2}],extra:()=>{if(R()<.15)floatText(rr(200,1400),rr(300,700),pick(["♪","♫","♬"]),"#fff",70)}}),
+  rain({item:th.it,isz:.7,rate:1,burst:2,bgl:th.bg,cap:"キラキラが ふってきた！",col:"#fff",stroke:"#FF4A7A",sfx:SFX.magic}),
+  charge({a:FACE,y:580,s:.8,col:"#BFEFFF",cap:"ろうそく… すぅ〜〜",emo:"🕯️",bolts:0,sfx:()=>tone(200,500,1.8,"sine",.1)}),
+  explode({x:800,y:500,cap:"ふ〜〜〜っ！！",col:"#fff",stroke:"#2D6BFF",c1:"#fff",c2:"#BFEFFF",c3:"#7FD4FF",bg:["#DFF6FF","#2D6BFF"],fire:["#fff","#BFEFFF"],debris:["#FFC4D6","#FFF6E0"],sfx:()=>noise(1.5,.6,2500)}),
+  eat({a:FOOD.cake,m:{candles:5,out:true},s:1,bg:th.bg,cap:"ケーキ いただきまーす！",col:"#fff",stroke:"#FF4A7A",crumb:"#FFC4D6"}),
+  eat({a:f.a,m:f.m,s:f.s,bg:th.bg,cap:`${f.n}も あるよ！`,col:"#fff",stroke:"#FF4A7A",crumb:f.cr}),
+  victory({cap:"さいこうの パーティー！",bgl:th.bg,cast:[{a:CAT,x:350,y:560,s:.5},{a:FACE,x:800,y:580,s:.5},{a:GHOST,x:1250,y:520,s:.5,m:{mood:"happy"}}]})]}
+function ghostArc(){return[
+  appear({bg:["#3A2A5A","#05030F"],stars:.5,cap:"夜の おばけやしきで…",col:"#B48CFF",stroke:"#05030F",sfx:()=>tone(200,180,2,"triangle",.1),cast:[{a:FACE,x:800,y:600,s:.5,m:{mood:"scared"}}]}),
+  appear({bg:["#3A2A5A","#05030F"],cap:"かくれんぼ しよう！",col:"#fff",stroke:"#6A2BD6",sfx:SFX.boo,cast:[{a:GHOST,x:800,y:520,s:.8,m:{mood:"happy"},from:"zoom",say:"ぼくが オニね〜"}]}),
+  appear({bg:["#3A2A5A","#05030F"],cap:"いーち、にーい、さーん…",col:"#fff",stroke:"#6A2BD6",sfx:()=>[0,.5,1].forEach(d=>tone(600,600,.2,"sine",.12,d)),cast:[{a:GHOST,x:800,y:520,s:.8,m:{mood:"happy"}}],extra:()=>{ctx.save();ctx.globalAlpha=.7;ctx.fillStyle="#05030F";ctx.fillRect(650,380,300,120);ctx.restore()}}),
+  appear({bg:["#3A2A5A","#05030F"],cap:"タンスの なかに かくれた！",size:84,col:"#fff",stroke:"#6A2BD6",sfx:SFX.pop,cast:[{a:{draw:(x,y,s)=>{L();box(x-180,y-260,360,520,"#7A4A1A",12);ctx.beginPath();ctx.moveTo(x,y-260);ctx.lineTo(x,y+260);ctx.stroke();circ(x-30,y,12,"#FFC928");circ(x+30,y,12,"#FFC928")}},x:800,y:520,shake:2}]}),
+  appear({bg:["#fff","#B48CFF"],cap:"みーつけた！！",size:160,col:"#fff",stroke:"#6A2BD6",sfx:SFX.boo,shake:16,cast:[{a:GHOST,x:800,y:520,s:1.5,m:{mood:"boo"},from:"zoom",spd:4}]}),
+  react({a:FACE,cap:"ぎゃーーー！",bg:["#B48CFF","#3A2A5A"]}),
+  zoomPast({a:FACE,m:{mood:"scared"},s:.45,bg:["#3A2A5A","#05030F"],cap:"にげろーー！",col:"#fff",passes:3,d:1.8,trail:"#fff",cast:[{a:GHOST,x:200,y:300,s:.5,dx:1200,m:{mood:"happy"}}]}),
+  appear({bg:["#B48CFF","#3A2A5A"],stars:.5,cap:"おばけ だいしゅうごう！",col:"#fff",stroke:"#6A2BD6",sfx:MELODY,cast:[{a:GHOST,x:350,y:560,s:.6,bob:true,from:"left"},{a:GHOST,x:800,y:500,s:.75,bob:true,from:"top",m:{mood:"happy"}},{a:GHOST,x:1250,y:560,s:.6,bob:true,from:"right",m:{mood:"angry"},say:"いっしょに あそぼ〜"}]}),
+  victory({cap:"おばけと なかよし！",bgl:["#B48CFF","#2D1A6B"],cast:[{a:GHOST,x:550,y:560,s:.6,m:{mood:"happy"}},{a:FACE,x:1050,y:580,s:.6}]})]}
+function seaArc(f){return[
+  appear({...SKYS.sea,cap:"海の 大ぼうけん！",emo:"🌊",col:"#fff",stroke:"#1E6FB8",sfx:SFX.splash,cast:[{a:FACE,x:800,y:600,s:.45,bob:true}]}),
+  appear({bgl:["#2D8BD9","#05203A"],cap:"海の そこへ もぐるぞ！",col:"#fff",stroke:"#1E6FB8",sfx:()=>[0,.3,.6,.9].forEach(d=>tone(800,1200,.1,"sine",.1,d)),cast:[{a:FACE,x:800,y:300,s:.4,dy:300}],extra:()=>spawn(1,()=>({x:rr(500,1100),y:H,vx:rr(-20,20),vy:-200,life:4,max:4,size:rr(6,14),col:"#BFEFFF",alpha:.7}))}),
+  appear({bgl:["#2D8BD9","#05203A"],cap:"ん？ あれは…",col:"#fff",stroke:"#1E6FB8",sfx:()=>[0,.5,1].forEach(d=>tone(110,110,.35,"sawtooth",.15,d)),cast:[{a:SHARK,x:1300,y:500,s:.7,dx:-300}]}),
+  react({a:FACE,cap:"巨大ザメだーー！",bg:["#7FD4FF","#155A9A"]}),
+  zoomPast({a:SHARK,m:{chomp:true},s:.8,bgl:["#2D8BD9","#05203A"],cap:"おいかけて きた〜！",col:"#fff",stroke:"#C8261A",passes:2,d:2,dir:-1,trail:"#BFEFFF"}),
+  appear({bgl:["#2D8BD9","#05203A"],cap:"…と思ったら？",col:"#fff",stroke:"#1E6FB8",sfx:SFX.boing,cast:[{a:SHARK,x:800,y:500,m:{mood:"happy"},say:`${f.n} ちょうだい！`,bob:true}]}),
+  eat({a:f.a,m:f.m,s:f.s,bg:["#2D8BD9","#05203A"],cap:"サメ「もぐもぐ」",col:"#fff",stroke:"#1E6FB8",crumb:f.cr}),
+  appear({bgl:["#2D8BD9","#05203A"],cap:"おれいに たからばこ！",col:"#FFE14D",stroke:"#1E6FB8",sfx:fanfare,cast:[{a:CHEST,x:800,y:620,s:.8,m:{open:true}},{a:SHARK,x:1200,y:350,s:.5,m:{mood:"happy"}}],extra:()=>{if(R()<.5)sparkles(800,450,2,"#FFE14D")}}),
+  victory({cap:"サメと ともだち！",bgl:["#7FD4FF","#1E6FB8"],cast:[{a:SHARK,x:850,y:560,s:.9,m:{mood:"happy"}}],spark:"#fff"})]}
+function dinoArc(){return[
+  appear({bgl:["#9FC2FF","#1E2340"],cap:"タイムマシン かんせい！",col:"#fff",stroke:"#2D6BFF",sfx:SFX.robot,cast:[{a:UFO,x:800,y:520,s:.9,from:"bottom"}],spark:"#fff"}),
+  warp({a:UFO,s:.8,cap:"恐竜時代へ タイムスリップ！",size:84,glow:"#3FE0A0"}),
+  appear({bgl:["#FFB46A","#7FD47A"],scene:JUNGLE,cap:"ここが 恐竜時代…！",col:"#fff",stroke:"#2B8A3E",sfx:SFX.roar,cast:[{a:UFO,x:400,y:450,s:.5}]}),
+  appear({bgl:["#FFB46A","#7FD47A"],scene:JUNGLE,cap:"なぞの たまご…",col:"#fff",stroke:"#2B8A3E",sfx:SFX.pop,cast:[{a:EGG,x:800,y:600,s:.6,m:{wob:true}}]}),
+  appear({bgl:["#FF9A6B","#3A0A00"],scene:JUNGLE,cap:"ガオーーー！！",size:150,col:"#FFE14D",stroke:"#C8261A",sfx:SFX.roar,shake:16,focus:true,cast:[{a:DINO,x:900,y:520,s:1.1,m:{roar:true},from:"right"}]}),
+  appear({bgl:["#FFB46A","#7FD47A"],scene:JUNGLE,cap:"にげろーーー！",size:120,col:"#fff",stroke:"#C8261A",sfx:()=>{SFX.roar();noise(2,.4,300)},shake:8,d:2.2,cast:[{a:FACE,x:200,y:620,s:.4,dx:1100,m:{mood:"scared"}},{a:DINO_R,x:-300,y:560,s:.8,dx:1100,m:{roar:true}}],extra:()=>speedLines("rgba(255,255,255,.4)",14)}),
+  appear({bgl:["#FFB46A","#7FD47A"],scene:JUNGLE,cap:"たまごを かえしてあげよう！",size:84,col:"#fff",stroke:"#2B8A3E",sfx:SFX.magic,cast:[{a:EGG,x:600,y:600,s:.5},{a:DINO_R,x:1100,y:560,s:.8,m:{mood:"happy"},say:"ありがとう ガオ！"}]}),
+  explode({x:1350,y:330,cap:"火山が ふんか！！",emo:"🌋",bg:["#FF8A3D","#3A0A00"],debris:["#6B4A3A","#3A2A20"]}),
+  appear({bgl:["#FF8A3D","#3A0A00"],cap:"恐竜の せなかで だっしゅつ！",size:80,col:"#FFE14D",stroke:"#7A1F2B",sfx:SFX.roar,shake:6,cast:[{a:DINO_R,x:800,y:600,s:.9,m:{roar:true},dx:300},{a:FACE,x:780,y:330,s:.3,dx:300}],extra:()=>speedLines("rgba(255,255,255,.5)",20)}),
+  warp({a:UFO,s:.8,cap:"いまの 時代に かえるぞ！",glow:"#3FE0A0"}),
+  victory({cap:"恐竜時代 大ぼうけん せいこう！",size:90,bgl:["#C2FFDF","#2B8A3E"],cast:[{a:UFO,x:800,y:520,s:.7}]})]}
+function robotArc(){return[
+  tower({item:ROBOT,h:300,n:30,s:.5,bgl:["#9FC2FF","#1E2340"],cap:"ロボット工場で 大量生産！",size:80,col:"#fff",stroke:"#2D6BFF"}),
+  appear({bgl:["#9FC2FF","#1E2340"],cap:"…1台だけ ようすが へん！",size:80,col:"#FF6B6B",stroke:"#1E2340",sfx:SFX.robot,cast:[{a:ROBOT,x:400,y:560,s:.6},{a:ROBOT,x:800,y:560,s:.6},{a:ROBOT_R,x:1200,y:540,s:.7,shake:4,say:"ハイジョ スル！"}]}),
+  vs({a:ROBOT,b:ROBOT_R,na:"ガッツンダー",nb:"バグロボ"}),
+  beam({a:ROBOT_R,x:1200,y:540,s:.9,target:{a:ROBOT,x:420,y:560,s:.85},tx:420,ty:450,cap:"バグ ビーム！",colr:"#FF4A3D",bg:["#FF9A9A","#3A0A0A"],stroke:"#C8261A"}),
+  clash({a:ROBOT,b:ROBOT_R,cap:"ガギィィン！！",col:"#2D6BFF"}),
+  special(HEROES[6],ENEMIES[3],{a:ROBOT_R,x:1200,y:520,s:.85,m:{}},{a:ROBOT,x:420,y:580,s:.85,m:{}}),
+  explode({x:1200,y:500,cap:"ドッカーン！！",debris:["#C8261A","#AEB6C8","#FFC928"]}),
+  appear({bgl:["#9FC2FF","#1E2340"],cap:"なおしてあげよう！",col:"#fff",stroke:"#2D6BFF",sfx:()=>{for(let i=0;i<8;i++)noise(.06,.4,2000,i*.2)},cast:[{a:ROBOT_R,x:800,y:560,s:.8,m:{broken:true},shake:3}],extra:()=>{if(R()<.4)floatText(rr(600,1000),rr(350,500),pick(["カン！","キュッ","トントン"]),"#FFE14D",56)}}),
+  appear({bgl:["#9FC2FF","#1E2340"],cap:"なおった！",size:120,col:"#FFE14D",stroke:"#1E2340",sfx:fanfare,cast:[{a:ROBOT_R,x:800,y:560,s:.8,say:"ゴメンネ… アリガトウ",bob:true}],spark:"#fff"}),
+  victory({cap:"ロボット みんな なかよし！",size:96,bgl:["#9FC2FF","#2D6BFF"],cast:[{a:ROBOT,x:550,y:560,s:.6},{a:ROBOT_R,x:1050,y:560,s:.6}]})]}
+function festivalArc(f){return[
+  appear({...SKYS.night,cap:"夏まつり スタート！",emo:"🏮",col:"#FFE14D",sfx:MELODY,cast:[{a:FACE,x:800,y:600,s:.5,bob:true}],scene:T=>{for(let i=0;i<8;i++){const x=150+i*190;ctx.save();ctx.fillStyle="#FF4A3D";ctx.shadowColor="#FF8A3D";ctx.shadowBlur=20;ctx.beginPath();ctx.ellipse(x,220+Math.sin(T*2+i)*6,40,55,0,0,TAU);ctx.fill();ctx.restore()}}}),
+  eat({a:f.a,m:f.m,s:f.s,bg:["#3A2A5A","#05030F"],cap:`やたいの ${f.n}！`,col:"#FFE14D",stroke:"#1E2340",crumb:f.cr}),
+  appear({...SKYS.night,cap:"きんぎょすくい！",col:"#fff",sfx:SFX.splash,extra:(T)=>{L(6);ctx.fillStyle="#7FD4FF";ctx.beginPath();ctx.ellipse(800,620,420,160,0,0,TAU);ctx.fill();ctx.stroke();for(let i=0;i<6;i++){const x=800+Math.cos(T*1.5+i)*280,y=620+Math.sin(T*2+i)*90;ctx.fillStyle="#FF4A3D";ctx.beginPath();ctx.ellipse(x,y,34,20,T+i,0,TAU);ctx.fill()}}}),
+  firework("ドーーン！！",["#FF4A3D","#FFE14D","#fff"]),
+  firework("ドドーーン！！",["#3FE0A0","#7FD4FF","#B48CFF"],{size:130}),
+  firework("たまや〜〜！",["#FF7AD9","#FFE14D","#3FE0A0","#fff"],{size:120,d:2.8}),
+  rain({item:FX.star,isz:.7,rate:1,burst:2,...SKYS.night,cap:"星も ふってきた！",col:"#FFE14D",sfx:SFX.magic}),
+  victory({cap:"さいこうの 夏まつり！",bgl:["#3A2A5A","#05030F"],stars:true,cast:[{a:FACE,x:800,y:600,s:.6,m:{mood:"happy"}}]})]}
+function magicArc(){return[
+  appear({bg:["#6A2BD6","#12061E"],stars:true,cap:"まほう学校に 入学！",emo:"🪄",col:"#F3D2FF",stroke:"#2B1A4E",sfx:SFX.magic,scene:T=>magicCircle(800,520,300,T,.6),cast:[{a:SW.magic,x:800,y:560,s:1,from:"bottom",m:{glow:.8}}]}),
+  appear({bg:["#6A2BD6","#12061E"],stars:true,cap:"先生は… ねこ！？",col:"#fff",stroke:"#2B1A4E",sfx:SFX.meow,cast:[{a:CAT,x:800,y:520,s:.8,say:"にゃんと まほうを おしえるにゃ"}]}),
+  appear({bg:["#6A2BD6","#12061E"],stars:true,cap:"へんしん まほう！",size:110,col:"#FFE14D",stroke:"#2B1A4E",sfx:SFX.magic,cast:[{a:EGG,x:800,y:560,s:.7,m:{wob:true}}],extra:(T,p)=>magicCircle(800,560,250,T*3,.8)}),
+  explode({x:800,y:540,cap:"ポンッ！",size:150,bg:["#F3D2FF","#6A2BD6"],c1:"#fff",c2:"#C79BFF",c3:"#FF9BF0",fire:["#fff","#C79BFF","#FF9BF0"],debris:["#F3D2FF"],sfx:()=>{SFX.pop();SFX.magic()}}),
+  react({a:FOOD.cake,s:1,cap:"たまごが ケーキに！？",m:{candles:3},bg:["#F3D2FF","#6A2BD6"]}),
+  freeze({cap:"こおらせ まほう！",bg:["#BFF0FF","#2B1A4E"],cast:[{a:ROBOT_R,x:1180,y:520,s:.8,m:{mood:"scared"}},{a:SW.magic,x:380,y:600,s:1.1,m:{glow:.8}}]}),
+  explode({x:800,y:500,cap:"しっぱい〜！ ボカーン！",size:110,col:"#C8FF7A",stroke:"#3A5A1A",c1:"#E8FFB0",c2:"#8CC83A",bg:["#C8FF7A","#3A5A1A"],fire:["#C8FF7A","#8CC83A"],debris:["#8CC83A"],sfx:SFX.fart}),
+  appear({bg:["#3A5A1A","#12061E"],cap:"先生「まっくろ だにゃ…」",col:"#fff",sfx:SFX.boing,cast:[{a:CAT,x:800,y:520,s:.8,m:{mood:"scared"}}],extra:()=>{ctx.save();ctx.globalAlpha=.5;ctx.fillStyle="#1E2340";ctx.beginPath();ctx.ellipse(800,520,200,170,0,0,TAU);ctx.fill();ctx.restore()}}),
+  charge({a:SW.magic,x:800,y:600,s:1.1,col:"#C79BFF",cap:"もう一回！ こんどこそ…",emo:"🔮",bolts:4,stars:true}),
+  rain({item:FX.star,isz:.9,rate:1,burst:3,bg:["#6A2BD6","#12061E"],stars:true,cap:"大せいこう！ 星の まほう！",col:"#FFE14D",stroke:"#2B1A4E",sfx:SFX.magic}),
+  victory({cap:"まほう使い 合格！",bgl:["#FF8BD6","#3A1488"],stars:true,cast:[{a:SW.magic,x:600,y:600,s:1},{a:CAT,x:1050,y:540,s:.6,m:{mood:"happy"}}],spark:"#FFC8F5"})]}
+function olympicsArc(r){const rs=[RACERS[3],RACERS[4],RACERS[5+Math.floor(r()*4)]];return[
+  appear({...SKYS.day,scene:GROUND,cap:"どうぶつ運動会 かいまく！",size:84,emo:"🏅",col:"#FFE14D",stroke:"#C8261A",sfx:fanfare,cast:rs.map((x,i)=>({a:x.a,x:350+i*450,y:600,s:x.s*1.3,m:x.m,from:"bottom",delay:i*.1,bob:true}))}),
+  ...countdown({...SKYS.road,cast:rs.map((x,i)=>({a:x.a,x:300+i*500,y:640,s:x.s,m:x.m}))}),
+  ...rs.map((x,i)=>zoomPast({a:x.a,m:x.m,s:x.s*1.4,...SKYS.road,y:680,cap:`かけっこ！ ${x.n}！`,size:84,col:"#FFE14D",passes:i+1,d:1.4,trail:"rgb(200,200,210)"})),
+  appear({...SKYS.day,scene:GROUND,cap:"つなひき 大勝負！",size:110,col:"#fff",stroke:"#C8261A",sfx:()=>noise(2,.3,400),shake:5,d:2.4,cast:[{a:DINO_R,x:450,y:580,s:.7,m:{roar:true}},{a:ROBOT,x:1150,y:560,s:.7}],extra:(T,p)=>{ctx.save();ctx.strokeStyle="#C27A3A";ctx.lineWidth=16;ctx.beginPath();ctx.moveTo(600,560);ctx.lineTo(1000,560+Math.sin(T*10)*10);ctx.stroke();ctx.restore()}}),
+  appear({...SKYS.day,scene:GROUND,cap:"ティラノの 勝ち！",col:"#FFE14D",stroke:"#2B8A3E",sfx:SFX.roar,cast:[{a:DINO_R,x:600,y:580,s:.7,m:{roar:true}},{a:ROBOT,x:1150,y:560,s:.7,m:{mood:"scared"},dx:-300,spin:3}]}),
+  appear({...SKYS.day,scene:GROUND,cap:"たかとび… ジャーーンプ！",size:96,col:"#fff",stroke:"#2D6BFF",sfx:()=>{tone(300,1600,.8,"sine",.2);SFX.whoosh()},cast:[{a:CAT,x:800,y:620,s:.6,dy:-420,spin:2}],extra:()=>{ctx.fillStyle="#FF4A3D";ctx.fillRect(500,380,600,16)}}),
+  rain({item:FX.star,isz:.6,rate:.8,burst:2,...SKYS.day,cap:"玉入れ！ ぽいぽい！",col:"#fff",stroke:"#C8261A",sfx:()=>{for(let i=0;i<10;i++)SFX.pop(i*.2)},cast:[{a:{draw:(x,y,s)=>{L(6);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y-420);ctx.stroke();ctx.fillStyle="#fff";ctx.beginPath();ctx.moveTo(x-90,y-420);ctx.lineTo(x+90,y-420);ctx.lineTo(x+60,y-300);ctx.lineTo(x-60,y-300);ctx.closePath();ctx.fill();ctx.stroke()}},x:800,y:820}]}),
+  victory({cap:"みんな 金メダル！",bgl:["#FFE14D","#FF8A00"],cast:rs.map((x,i)=>({a:x.a,x:400+i*400,y:580,s:x.s*1.3,m:x.m}))})]}
+function snowArc(){return[
+  appear({bgl:["#DFF6FF","#9FC2FF"],scene:SNOWGROUND,cap:"雪が つもった！",emo:"⛄",col:"#fff",stroke:"#2D6BFF",sfx:()=>SFX.wind(1.6),cast:[{a:FACE,x:800,y:600,s:.5,bob:true}]}),
+  tower({item:SNOWBALL,h:50,n:60,s:1.2,bgl:["#DFF6FF","#9FC2FF"],cap:"雪玉 ゴロゴロ…",col:"#fff",stroke:"#2D6BFF"}),
+  appear({bgl:["#DFF6FF","#9FC2FF"],scene:SNOWGROUND,cap:"雪だるま かんせい！",col:"#fff",stroke:"#2D6BFF",sfx:fanfare,cast:[{a:SNOWMAN,x:800,y:520,s:1,from:"bottom"}],spark:"#fff"}),
+  appear({bgl:["#DFF6FF","#9FC2FF"],scene:SNOWGROUND,cap:"こおりのボスが きた！",col:"#7FD4FF",stroke:"#1E2340",sfx:SFX.laugh,cast:[{a:SNOWMAN,x:450,y:540,s:.7},{a:BOSS_ICE,x:1150,y:500,s:.8,from:"right",say:"雪がっせん しようぜ！"}]}),
+  rain({item:SNOWBALL,isz:1,rate:1,burst:3,bgl:["#DFF6FF","#9FC2FF"],cap:"雪がっせん！ えいっ！",size:110,col:"#fff",stroke:"#2D6BFF",sfx:()=>{for(let i=0;i<10;i++)noise(.1,.4,1200,i*.2)},shake:4,cast:[{a:FACE,x:450,y:620,s:.5,bob:true},{a:BOSS_ICE,x:1150,y:520,s:.7,m:{mood:"spin"},shake:6}]}),
+  appear({bgl:["#DFF6FF","#9FC2FF"],scene:SNOWGROUND,cap:"ボス、雪まみれ！",col:"#fff",stroke:"#2D6BFF",sfx:SFX.boing,cast:[{a:SNOWMAN,x:800,y:520,s:1,say:"…ボスです",sy:300}]}),
+  appear({bgl:["#3A2A5A","#1E2340"],scene:SNOWGROUND,cap:"かまくらで あったまろう",col:"#fff",stroke:"#1E2340",sfx:()=>tone(400,500,1,"sine",.08),extra:()=>{L(8);ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(800,800,320,Math.PI,TAU);ctx.fill();ctx.stroke();ctx.fillStyle="#FFB46A";ctx.beginPath();ctx.arc(800,800,160,Math.PI,TAU);ctx.fill()}}),
+  eat({a:FOOD.ramen,s:1.2,bg:["#FFB46A","#3A2A5A"],cap:"あったか ラーメン！",col:"#fff",stroke:"#C8261A",crumb:"#FFE07A"}),
+  yum({cap:"雪の日 さいこう！",side:SNOWMAN,ss:.6,bg:["#DFF6FF","#2D6BFF"]})]}
+
+/* 新シリーズの登録 */
+HEROES.forEach((h,i)=>vid(`tr_${h.id}`,"battle",`${h.n}の しゅぎょう大作戦！`,h.e+"⛰️",[h.c,"#6B4A3A"],`${h.e} しゅぎょう中…！`,training(h)));
+HEROES.forEach((h,i)=>vid(`ts_${h.id}`,"adventure",`${h.n}の たから島 大ぼうけん！`,h.e+"💰",[h.c,"#FFB000"],`🗺️ たから島 たんけん中…！`,treasure(h)));
+FOODS.forEach(f=>vid(`cb_${f.k}`,"food",`${f.n} 料理対決！`,f.e+"🍳",[f.c,"#4A2A7A"],`🍳 料理対決 生中継…！`,cookbattle(f)));
+PARTY_THEMES.forEach((th,i)=>vid(`pa_${i}`,"event",`${th.t} パーティー！`,th.e+"🎉",[th.bg[0],th.bg[1]],`🎉 ${th.t}パーティー中…！`,party(th,FOODS[i*2])));
+["おばけやしき かくれんぼ！","おばけの よる 大さわぎ！","おばけ だいしゅうごう！"].forEach((t,i)=>vid(`gh_${i}`,"funny",t,"👻🙈",["#B48CFF","#05030F"],"👻 おばけやしき 中継中…！",ghostArc()));
+["海の 大ぼうけん！","サメと かいていたんけん！","海の そこの たからもの！"].forEach((t,i)=>vid(`se_${i}`,"adventure",t,"🌊🦈",["#7FD4FF","#05203A"],"🌊 海の中から 中継中…！",seaArc(FOODS[[5,1,7][i]])));
+["タイムマシンで 恐竜時代へ！","恐竜の 森で 大ピンチ！","ジュラシック 大ぼうけん！"].forEach((t,i)=>vid(`dn_${i}`,"animal",t,"🦕⏰",["#7FD47A","#FF8A3D"],"🦕 恐竜時代から 中継中…！",dinoArc()));
+["ロボット工場 大パニック！","ロボット 30台 できた！","バグロボを なおせ！"].forEach((t,i)=>vid(`rf_${i}`,"funny",t,"🏭🤖",["#9FC2FF","#C8261A"],"🏭 ロボット工場 中継中…！",robotArc()));
+["夏まつり 花火大会！","夜空の 大花火！","花火 1万発 チャレンジ！"].forEach((t,i)=>vid(`fe_${i}`,"event",t,"🎆🏮",["#FF4A3D","#05030F"],"🎆 花火大会 生中継…！",festivalArc(FOODS[[6,3,0][i]])));
+["まほう学校に 入学！","まほうの テスト 大さわぎ！","へんしん まほう 大しっぱい！"].forEach((t,i)=>vid(`mg_${i}`,"adventure",t,"🪄🏫",["#C79BFF","#12061E"],"🪄 まほう学校から 中継中…！",magicArc()));
+["どうぶつ運動会！","つなひき 大決戦！","たかとび チャンピオン！","かけっこ 大会！"].forEach((t,i)=>{const r=mulberry(i+50);vid(`ol_${i}`,"animal",t,"🏅🐾",["#FFE14D","#3FA34D"],"🏅 運動会 生中継…！",olympicsArc(r))});
+["雪の日 大はしゃぎ！","雪がっせん 大決戦！","雪だるま 100こ チャレンジ！"].forEach((t,i)=>vid(`sn_${i}`,"event",t,"⛄❄️",["#DFF6FF","#2D6BFF"],"⛄ 雪の日 中継中…！",snowArc()));
+
+/* ================= 3分のお話にする（だい1わ〜） ================= */
+function mulberry(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const pk=(r,a)=>a[Math.floor(r()*a.length)];
+const ARCS=[
+  r=>{const h=pk(r,HEROES),e=pk(r,ENEMIES);return{t:`${h.n} vs ${e.n}`,sc:battle(h,e)}},
+  r=>{const f=pk(r,FOODS),m=pk(r,FOOD_MODES);return{t:`${f.n}${m[0]}`,sc:m[1](f)}},
+  r=>{const v=pk(r,VEHICLES),d=pk(r,DESTS);return{t:`${v.n}で ${d.n}へ`,sc:trip(v,d)}},
+  r=>{const i=Math.floor(r()*9),rs=[RACERS[i],RACERS[(i+3)%9],RACERS[(i+5)%9]];return{t:"大レース！",sc:race(rs,pk(r,rs))}},
+  r=>{const h=pk(r,HEROES);return{t:`${h.n}の しゅぎょう`,sc:training(h)}},
+  r=>{const h=pk(r,HEROES);return{t:"たから島 大ぼうけん",sc:treasure(h)}},
+  r=>{const f=pk(r,FOODS);return{t:`${f.n} 料理対決`,sc:cookbattle(f)}},
+  r=>{const th=pk(r,PARTY_THEMES);return{t:`${th.t} パーティー`,sc:party(th,pk(r,FOODS))}},
+  r=>({t:"おばけやしき かくれんぼ",sc:ghostArc()}),
+  r=>({t:"海の 大ぼうけん",sc:seaArc(pk(r,FOODS))}),
+  r=>({t:"恐竜時代へ タイムスリップ",sc:dinoArc()}),
+  r=>({t:"ロボット工場 大パニック",sc:robotArc()}),
+  r=>({t:"夏まつり 花火大会",sc:festivalArc(pk(r,FOODS))}),
+  r=>({t:"まほう学校",sc:magicArc()}),
+  r=>({t:"どうぶつ運動会",sc:olympicsArc(r)}),
+  r=>({t:"雪の日 大はしゃぎ",sc:snowArc()})];
+function chapter(n,title,c){return{d:2.6,chap:true,cap:title,size:80,y:600,col:"#fff",
+  start(){[523,784,1047].forEach((f,i)=>tone(f,f,.15,"square",.08,i*.12));SFX.whoosh()},
+  draw(lt,p,T){ctx.fillStyle=c[1];ctx.fillRect(-80,-80,W+160,H+160);ctx.save();ctx.translate(800,450);ctx.rotate(T*.3);ctx.fillStyle=c[0];ctx.globalAlpha=.55;for(let i=0;i<12;i++){ctx.rotate(TAU/12);ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-140,-1300);ctx.lineTo(140,-1300);ctx.fill()}ctx.restore();
+    const k=back(p*3);ctx.save();ctx.translate(800,340);ctx.scale(k,k);ctx.font=`150px ${FONT}`;ctx.textAlign="center";ctx.textBaseline="middle";ctx.lineJoin="round";ctx.lineWidth=28;ctx.strokeStyle="#1E2340";ctx.fillStyle="#FFE14D";const t=`だい${n}わ`;ctx.strokeText(t,0,0);ctx.fillText(t,0,0);ctx.restore()}}}
+function finale(v){return{d:3.2,cap:"みんな だいしゅうごう！",size:96,y:150,col:"#FFE14D",
+  start(){fanfare();confetti(160);MELODY()},
+  draw(lt,p,T){bgLin(v.c[0],v.c[1]);speedLines("rgba(255,255,255,.12)",10);[[SW.thunder,250,600,.7],[CAT,520,560,.45],[DINO_R,800,580,.5],[GHOST,1080,520,.45],[ROBOT,1340,560,.5]].forEach(([a,x,y,s],i)=>a.draw(x,y+Math.sin(T*6+i)*14,s,T,{mood:"happy"}));if(R()<.4)sparkles(rr(200,1400),rr(250,700),2,"#fff")}}}
+
 /* タイトル行と長さ */
 function wrapTitle(t){if(t.length<=14)return t;const mid=t.length/2;let best=-1,bd=99;for(let i=4;i<t.length-3;i++){if("のを、！ 　が".includes(t[i])){const d=Math.abs(i+1-mid);if(d<bd){bd=d;best=i+1}}}if(best<0)best=Math.ceil(mid);return t.slice(0,best).trim()+"\n"+t.slice(best).trim()}
-V.forEach((v,vi)=>{v.lines=wrapTitle(v.t);v.scenes=[OPEN(v),...v.scenes.filter(s=>s&&s.d>.05),OMAKE[vi%OMAKE.length](),END()];let s=0;v.scenes.forEach(sc=>{sc.at=s;s+=sc.d});v.total=s});
+const sumD=a=>a.reduce((t,x)=>t+(x&&x.d>.05?x.d:0),0);
+V.forEach((v,vi)=>{v.lines=wrapTitle(v.t);const r=mulberry(vi*9973+17);const parts=[{t:v.t,sc:v.scenes}];let tot=sumD(v.scenes)+15,g=0;const used=new Set();
+  while(tot<172&&g<40){g++;const ai=Math.floor(r()*ARCS.length);if(used.has(ai))continue;used.add(ai);const a=ARCS[ai](r);parts.push(a);tot+=sumD(a.sc)+2.6}
+  const sc=[OPEN(v)];parts.forEach((pt,i)=>{sc.push(chapter(i+1,pt.t,v.c));pt.sc.forEach(x=>{if(x&&x.d>.05)sc.push(x)})});
+  sc.push(finale(v),OMAKE[vi%OMAKE.length](),END());v.scenes=sc;let s=0;sc.forEach(x=>{x.at=s;s+=x.d});v.total=s;v.parts=parts.length});
 
 /* ================= 保存データ ================= */
 let data;try{data=JSON.parse(localStorage.getItem("kanta-tv3"))}catch(e){}
@@ -1108,7 +1307,7 @@ function startVideo(i){
   play={v:V[i],t0:performance.now(),si:-1};
   D().views++;save();
   $("nowTitle").textContent=`${i+1}. ${V[i].t}`;
-  $("overlay").hidden=true;$("again").hidden=true;$("nextBtn").hidden=true;$("stopBtn").hidden=false;
+  $("overlay").hidden=true;$("again").hidden=true;$("nextBtn").hidden=true;$("stopBtn").hidden=false;$("skipBtn").hidden=false;
   $("ticker").classList.remove("stop");$("tickText").textContent="▶️ 動画を再生中…　"+V[i].tick;
   $("like").disabled=true;$("likeHint").textContent="動画を見おわると押せるよ";
   $("cin").disabled=false;$("csend").disabled=false;
@@ -1116,7 +1315,7 @@ function startVideo(i){
 }
 function nextIndex(){const list=filtered();const k=list.indexOf(cur);return list[(k+1)%list.length]??0}
 function endVideo(stopped){
-  play=null;watched=true;$("stopBtn").hidden=true;
+  play=null;watched=true;$("stopBtn").hidden=true;$("skipBtn").hidden=true;
   $("ovText").textContent=stopped?"⏹ とめたよ":"🎉 さいごまで見たよ！";$("ovHint").textContent="いいね！とコメントをしてね";
   $("again").hidden=false;$("nextBtn").hidden=false;$("overlay").hidden=false;
   $("ticker").classList.add("stop");$("tickText").textContent="⏹ 再生おわり！";
@@ -1159,14 +1358,15 @@ function renderMenu(){
   const list=filtered();$("count").textContent=`動画リスト（${list.length}本）`;
   $("menu").innerHTML=list.map(i=>{const v=V[i],d=data.v[v.id];return`
     <button class="card ${i===cur?"on":""}" data-i="${i}">
-      <div class="thumb" style="background:linear-gradient(135deg,${v.c[0]},${v.c[1]})"><span class="num">${i+1}</span>${v.e}${i>=31?'<span class="badge">NEW</span>':""}</div>
-      <div><div class="t">${v.t}</div><div class="m">${Math.round(v.total)}秒　▶ ${d.views}回　👍 ${d.likes}　💬 ${d.comments.length}</div></div>
+      <div class="thumb" style="background:linear-gradient(135deg,${v.c[0]},${v.c[1]})"><span class="num">${i+1}</span>${v.e}${i>=131?'<span class="badge">NEW</span>':""}</div>
+      <div><div class="t">${v.t}</div><div class="m">${Math.floor(v.total/60)}:${String(Math.round(v.total%60)).padStart(2,"0")}（${v.parts}話）　▶ ${d.views}回　👍 ${d.likes}　💬 ${d.comments.length}</div></div>
     </button>`}).join("");
 }
 $("menu").addEventListener("click",e=>{const b=e.target.closest(".card");if(b){startVideo(+b.dataset.i);if(window.innerWidth<860)$("screen").scrollIntoView({behavior:"smooth",block:"center"})}});
 $("rand").addEventListener("click",()=>{const l=filtered();startVideo(pick(l));$("screen").scrollIntoView({behavior:"smooth",block:"center"})});
 $("again").addEventListener("click",()=>{if(cur>=0)startVideo(cur)});
 $("nextBtn").addEventListener("click",()=>startVideo(nextIndex()));
+$("skipBtn").addEventListener("click",()=>{if(!play)return;const now=performance.now(),el=(now-play.t0)/1000,nx=play.v.scenes.find(x=>x.chap&&x.at>el+.2);parts=[];play.si=-1;play.t0=nx?now-nx.at*1000:now-(play.v.total-.05)*1000});
 $("stopBtn").addEventListener("click",()=>{if(play)endVideo(true)});
 $("auto").checked=!!data.auto;$("auto").addEventListener("change",()=>{data.auto=$("auto").checked;save()});
 $("sound").addEventListener("click",()=>{muted=!muted;$("sound").textContent=muted?"🔇 音なし":"🔊 音あり";ac()});
@@ -1195,6 +1395,7 @@ renderWho();renderChips();renderMenu();renderSub();resize();
 (document.fonts?document.fonts.load(`40px "Dela Gothic One"`):Promise.resolve()).catch(()=>{}).finally(()=>requestAnimationFrame(loop));
 </script>
 
+<div style="text-align:center;color:#6A6F8C;font-size:12px;padding:20px 0 8px">かんよチャンネル　バージョン 2026.10.14-3分版</div>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}</script>
 </body>
 </html>
