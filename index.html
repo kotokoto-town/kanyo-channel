@@ -7,12 +7,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="かんたCh">
+<meta name="apple-mobile-web-app-title" content="かんよCh">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px;font-family:system-ui,sans-serif;-webkit-tap-highlight-color:transparent}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>かんたチャンネル</title>
+<title>かんよチャンネル</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap">
 <style>
 /* レイアウト: 上にチャンネル看板、左(上)に大きなテレビ画面＋再生中テロップ、右(下)にカテゴリつき動画メニュー。単一テーマ（明るいおもちゃ箱） */
@@ -67,6 +67,8 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 form{display:flex;gap:8px}
 form input{flex:1;min-width:0;font:inherit;font-size:17px;padding:10px 14px;border:3px solid var(--ink);border-radius:14px;background:var(--bg)}
 form button{font-size:17px;font-weight:800;background:var(--blue);color:var(--paper);border:3px solid var(--ink);border-radius:14px;padding:10px 16px}
+.who{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.who button{font-size:16px;font-weight:800;background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:999px;padding:5px 16px}.who button.on{background:var(--red);color:var(--paper)}.who button[data-n="ようた"].on{background:var(--blue)}
+.av.yo{background:var(--blue)}
 .comments{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;max-height:260px;overflow-y:auto}
 .comments li{display:flex;gap:10px;align-items:flex-start}
 .av{flex:none;width:36px;height:36px;border-radius:50%;background:var(--red);color:var(--paper);display:grid;place-items:center;font-size:16px;border:3px solid var(--ink)}
@@ -102,7 +104,7 @@ aside{display:flex;flex-direction:column;gap:12px;min-width:0}
 
 <div class="wrap">
   <header>
-    <div class="logo">かんたチャンネル</div>
+    <div class="logo">かんよチャンネル</div>
     <div class="sub">見たい動画をタップ！音も出るよ🔊</div>
   </header>
 
@@ -115,7 +117,7 @@ aside{display:flex;flex-direction:column;gap:12px;min-width:0}
             <div class="ovbtns"><button class="again" id="again" hidden>▶ もう一回</button><button class="again next" id="nextBtn" hidden>⏭ つぎの動画</button></div></div></div>
           <div class="bar"><i id="prog"></i></div>
         </div>
-        <div class="ticker stop" id="ticker"><span class="live">LIVE</span><div class="run"><b id="tickText">かんたチャンネルへようこそ！</b></div><button class="tbtn" id="stopBtn" hidden>⏹ とめる</button><button class="tbtn" id="sound">🔊 音あり</button></div>
+        <div class="ticker stop" id="ticker"><span class="live">LIVE</span><div class="run"><b id="tickText">かんよチャンネルへようこそ！</b></div><button class="tbtn" id="stopBtn" hidden>⏹ とめる</button><button class="tbtn" id="sound">🔊 音あり</button></div>
       </div>
       <div class="np">
         <h2 id="nowTitle">まだ動画をえらんでいません</h2>
@@ -125,6 +127,7 @@ aside{display:flex;flex-direction:column;gap:12px;min-width:0}
           <button class="sub-btn" id="subBtn">🔔 チャンネル登録</button>
           <span class="hint" id="likeHint">動画を見おわると押せるよ</span>
         </div>
+        <div class="who" id="who"><span class="hint">だれが書く？</span><button type="button" class="on" data-n="かんた">かんた</button><button type="button" data-n="ようた">ようた</button></div>
         <form id="form">
           <input id="cin" maxlength="60" placeholder="コメントを書いてね" autocomplete="off" disabled>
           <button id="csend" disabled>送る</button>
@@ -567,7 +570,7 @@ function launch(o){const a=o.a||ROCKET;return base(o,2.4,{cy:o.cy??150,size:o.si
 function OPEN(v){return{d:2.4,cap:v.lines,size:66,y:760,col:"#fff",
   start(){[784,988,1175,1568].forEach((f,i)=>tone(f,f,.14,"square",.08,i*.1));SFX.whoosh()},
   draw(lt,p,T){ctx.fillStyle=v.c[1];ctx.fillRect(-80,-80,W+160,H+160);ctx.save();ctx.translate(800,380);ctx.rotate(T*.4);ctx.fillStyle=v.c[0];for(let i=0;i<14;i++){ctx.rotate(TAU/14);ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-150,-1300);ctx.lineTo(150,-1300);ctx.fill()}ctx.restore();
-    ctx.save();ctx.fillStyle="#FF4A3D";ctx.strokeStyle="#1E2340";ctx.lineWidth=8;ctx.beginPath();rrect(560,40,480,90,24);ctx.fill();ctx.stroke();ctx.fillStyle="#fff";ctx.font=`52px ${FONT}`;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("かんたチャンネル",800,88);ctx.restore();
+    ctx.save();ctx.fillStyle="#FF4A3D";ctx.strokeStyle="#1E2340";ctx.lineWidth=8;ctx.beginPath();rrect(560,40,480,90,24);ctx.fill();ctx.stroke();ctx.fillStyle="#fff";ctx.font=`52px ${FONT}`;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("かんよチャンネル",800,88);ctx.restore();
     const k=back(p*2.2);ctx.save();ctx.translate(800,390);ctx.scale(k,k);ctx.rotate(Math.sin(T*4)*.08);ctx.font="230px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(v.e,0,0);ctx.restore()}}}
 function END(){return{d:3.2,cap:"見てくれてありがとう！",size:96,y:150,col:"#FFE14D",
   start(){confetti(120);[1568,1318,1568,1976].forEach((f,i)=>tone(f,f,.25,"sine",.12,.3+i*.18))},
@@ -639,16 +642,16 @@ vid("thunder","battle","ウルトラサンダードラゴンソードのウル�
   charge({a:SW.thunder,x:420,y:620,s:1.25,col:"#FFE14D",cap:"ギガ・カミナリパワー！",emo:"⚡️⚡️⚡️⚡️",bolts:9,d:2,cast:[MT]}),
   beam({a:SW.thunder,x:330,y:690,s:1.47,m:{ang:1.05},target:{a:MTN,x:1330,y:650},tx:1330,ty:600,cap:"ギガ カミナリビーム！！",w:90,d:1.6}),
   explode({x:1330,y:600,cap:"超ドッカーーーーーン！！！",emo:"💥💥💥",d:2.8,grow:.7}),
-  victory({cap:"かんた の 大勝利！",cast:[{a:SW.thunder,x:800,y:600,s:1.3,m:{glow:.9}}]})]);
+  victory({cap:"かんた＆ようた 大勝利！",cast:[{a:SW.thunder,x:800,y:600,s:1.3,m:{glow:.9}}]})]);
 
 vid("magic","battle","オースティンマジックソードの最強魔法発動！","🔮",["#B48CFF","#4B2BD6"],"🔮 さいきょう魔法 はつどう中…！",[
-  OLD2[0],vs({a:SW.magic,b:BOSS,na:"かんた",nb:"あくのボス",colA:"#6A2BD6",colB:"#7A1F2B"}),
+  OLD2[0],vs({a:SW.magic,b:BOSS,na:"かんた＆ようた",nb:"あくのボス",colA:"#6A2BD6",colB:"#7A1F2B"}),
   appear({bg:["#5A1F4A","#12061E"],stars:true,cap:"ボスの パンチこうげき！",col:"#FF6B6B",cast:[{a:BOSS,x:1100,y:520,s:1.1,m:{mood:"laugh"},say:"くらえ〜！",dx:-250},{a:SW.magic,x:380,y:620,s:1.1,shake:6}],shake:8}),
   appear({bg:["#6A2BD6","#12061E"],stars:true,cap:"マジックバリア！",emo:"🛡️",col:"#F3D2FF",sfx:SFX.magic,cast:[{a:SW.magic,x:380,y:620,s:1.1,m:{glow:1}},{a:BOSS,x:1200,y:520,m:{mood:"scared"},say:"いてて！",shake:5}],extra:(T,p)=>{magicCircle(380,480,260,T*2,.9)}}),
   OLD2[1],OLD2[2],OLD2[3],
   appear({...SKYS.space,cap:"そのころ ボスは…",col:"#fff",sfx:SFX.boing,cast:[{a:MOON,x:800,y:720,s:1.6,m:{spots:[[-60,-40,40,"#8A8D99"],[70,30,30,"#8A8D99"]]}},{a:BOSS,x:800,y:330,s:.45,m:{mood:"scared"},from:"top",say:"ここ どこ〜！？",sy:300}]}),
   {...OLD2[0],d:.01,cap:null,start(){},draw(){}},
-  victory({cap:"かんた の 大勝利！",bgl:["#FF8BD6","#3A1488"],stars:true,cast:[{a:SW.magic,x:800,y:600,s:1.3,m:{glow:.9}}],scene:T=>magicCircle(800,520,260,T,.5),spark:"#FFC8F5"})]);
+  victory({cap:"かんた＆ようた 大勝利！",bgl:["#FF8BD6","#3A1488"],stars:true,cast:[{a:SW.magic,x:800,y:600,s:1.3,m:{glow:.9}}],scene:T=>magicCircle(800,520,260,T,.5),spark:"#FFC8F5"})]);
 
 vid("legend","battle","最強レックウザのガリョウテンセイ！伝説のポケモンバトル","🐉",["#44E3A1","#0B7A55"],"🐉 伝説のバトル 中継中…！",[
   appear({bgl:["#0B2A6B","#2B6F58"],cap:"あくのロボット軍団が\nせめてきた！",size:84,col:"#FF6B6B",sfx:SFX.robot,cast:[{a:ROBOT_R,x:900,y:560,s:.7,from:"right"},{a:ROBOT_R,x:1150,y:600,s:.8,from:"right",delay:.1},{a:ROBOT_R,x:1400,y:560,s:.7,from:"right",delay:.2,say:"ピピピ！"}],shake:3}),
@@ -674,7 +677,7 @@ vid("fire","battle","ファイヤーソードの灼熱バーニングスラッ�
   beam({a:SW.fire,x:380,y:620,s:1.2,m:{ang:1.0},target:{a:BOSS_ICE,x:1220,y:520},cap:"バーニングスラッシュ！！",colr:"#FF8A00",bg:["#FFB46A","#3A0A00"],stroke:"#C8261A"}),
   explode({x:1220,y:520,cap:"ボワァァァーーッ！！！",emo:"🔥🔥🔥",fire:["#FFE14D","#FF8A00","#FF4A3D"]}),
   appear({bg:["#7FD4FF","#1E6FB8"],cap:"こおりのボス、とけちゃった！",size:84,col:"#fff",stroke:"#1E6FB8",sfx:SFX.splash,cast:[{a:BOSS_ICE,x:1100,y:620,s:.8,m:{mood:"scared"},say:"あちちちち〜！",shake:6,dy:120}],extra:()=>{spawn(2,()=>({x:1100+rr(-150,150),y:rr(450,700),vx:rr(-50,50),vy:200,g:600,life:.8,max:.8,size:rr(8,16),col:"#BFEFFF"}))}}),
-  victory({cap:"かんた の 大勝利！",bgl:["#FFB46A","#C8261A"],cast:[{a:SW.fire,x:800,y:600,s:1.3,m:{glow:.9}}],spark:"#FFE14D"})]);
+  victory({cap:"かんた＆ようた 大勝利！",bgl:["#FFB46A","#C8261A"],cast:[{a:SW.fire,x:800,y:600,s:1.3,m:{glow:.9}}],spark:"#FFE14D"})]);
 
 vid("ice","battle","アイスクリスタルソードの絶対零度ブリザード！","❄️",["#BFF0FF","#2D8BD9"],"❄️ ブリザード ふきあれ中…！",[
   appear({bg:["#FF8A3D","#3A0A00"],cap:"マグマのボス さんじょう！",col:"#FFE14D",stroke:"#7A1F2B",sfx:SFX.laugh,cast:[{a:BOSS_RED,x:1180,y:520,from:"top",say:"あついぞ〜！もえろ〜！",sayAt:.45}],extra:()=>spawn(1,()=>({x:rr(0,W),y:H,vx:0,vy:rr(-300,-150),life:2,max:2,size:rr(6,14),col:pick(["#FFE14D","#FF8A00"])}))}),
@@ -683,7 +686,7 @@ vid("ice","battle","アイスクリスタルソードの絶対零度ブリザー
   rain({item:FX.snow,isz:.6,rate:1,burst:3,g:50,bg:["#DFF6FF","#2D6BFF"],cap:"ブリザード 発動！！",col:"#fff",stroke:"#2D6BFF",size:120,sfx:()=>SFX.wind(2.2),cast:[{a:SW.ice,x:380,y:600,s:1.1,m:{glow:1}},{a:BOSS_RED,x:1180,y:520,m:{mood:"scared"},say:"さ、さむ〜い！",shake:8}],shake:6}),
   freeze({cap:"カチコチーーン！！",size:130,cast:[{a:BOSS_RED,x:1180,y:520,m:{mood:"scared"}},{a:SW.ice,x:380,y:600,s:1.1,m:{glow:.8}}]}),
   appear({bg:["#BFF0FF","#1A4A7A"],cap:"ボス、こおりづけ！",col:"#fff",stroke:"#2D6BFF",sfx:SFX.ice,cast:[{a:BOSS_RED,x:1180,y:520,m:{mood:"spin"}}],extra:(T)=>{ctx.save();ctx.globalAlpha=.55;ctx.fillStyle="#BFF0FF";ctx.strokeStyle="#fff";ctx.lineWidth=8;ctx.beginPath();rrect(950,240,460,520,30);ctx.fill();ctx.stroke();ctx.restore();bubble(700,400,"…ハックション！",44)}}),
-  victory({cap:"かんた の 大勝利！",bgl:["#DFF6FF","#2D6BFF"],cast:[{a:SW.ice,x:800,y:600,s:1.3,m:{glow:.9}}],spark:"#fff"})]);
+  victory({cap:"かんた＆ようた 大勝利！",bgl:["#DFF6FF","#2D6BFF"],cast:[{a:SW.ice,x:800,y:600,s:1.3,m:{glow:.9}}],spark:"#fff"})]);
 
 vid("wind","battle","ウィンドソードの大竜巻ハリケーン！","🌪️",["#B8FFD9","#2BB673"],"🌪️ 大竜巻 発生中…！",[
   OLD2[0].constructor===Object?appear({bg:["#5A1F4A","#12061E"],stars:true,cap:"あくのボス、またあらわる！",col:"#FF6B6B",sfx:SFX.laugh,cast:[{a:BOSS,x:1180,y:520,from:"top",say:"こんどこそ まけないぞ！",sayAt:.45}]}):null,
@@ -692,11 +695,11 @@ vid("wind","battle","ウィンドソードの大竜巻ハリケーン！","🌪�
   appear({bgl:["#B8FFD9","#2BB673"],cap:"ビュオォォォーー！！",size:120,col:"#fff",stroke:"#1E5A3F",sfx:()=>SFX.wind(1.6),shake:10,cast:[{a:SW.wind,x:380,y:600,s:1.1,m:{glow:1,ang:.4}},{a:BOSS,x:1180,y:520,m:{mood:"scared"},say:"か、風が〜！",shake:12,dx:80}],extra:()=>{speedLines("rgba(255,255,255,.7)",30)}}),
   tornado({cap:"大竜巻 ハリケーン！！",size:120,col:"#fff",stroke:"#1E5A3F",victim:BOSS,vs:.6,d:2.6,cast:[{a:SW.wind,x:300,y:620,s:1,m:{glow:1}}]}),
   flyAway({a:BOSS,x:1150,y:300,s:.6,cap:"ボス、ふきとばされた〜！",bg:["#2BB673","#0A2A1A"]}),
-  victory({cap:"かんた の 大勝利！",bgl:["#C2FFDF","#2BB673"],cast:[{a:SW.wind,x:800,y:600,s:1.3,m:{glow:.9}}],spark:"#fff"})].filter(Boolean));
+  victory({cap:"かんた＆ようた 大勝利！",bgl:["#C2FFDF","#2BB673"],cast:[{a:SW.wind,x:800,y:600,s:1.3,m:{glow:.9}}],spark:"#fff"})].filter(Boolean));
 
-vid("robotwar","battle","かんた vs 巨大ロボ 最終決戦！","🤖",["#9FC2FF","#3C6BE0"],"🤖 巨大ロボと たたかい中…！",[
+vid("robotwar","battle","かんた＆ようた vs 巨大ロボ 最終決戦！","🤖",["#9FC2FF","#3C6BE0"],"🤖 巨大ロボと たたかい中…！",[
   appear({...SKYS.night,cap:"空から なにかが…！",col:"#fff",sfx:SFX.land,cast:[{a:ROBOT_R,x:1150,y:520,s:1.1,from:"top",spd:1.3,say:"ハイジョ スル",sayAt:.6}],shake:6}),
-  vs({a:SW.thunder,b:ROBOT_R,na:"かんた",nb:"メカボス",colA:"#2D6BFF",colB:"#C8261A"}),
+  vs({a:SW.thunder,b:ROBOT_R,na:"かんた＆ようた",nb:"メカボス",colA:"#2D6BFF",colB:"#C8261A"}),
   beam({a:ROBOT_R,x:1200,y:540,s:1,target:{a:SW.thunder,x:400,y:600,s:1},tx:420,ty:420,cap:"ロボット目からビーム！",colr:"#FF4A3D",bg:["#FF9A9A","#3A0A0A"],stroke:"#C8261A"}),
   zoomPast({a:SW.thunder,m:{ang:1.57,glow:1},bg:["#2E3FA0","#060A1E"],cap:"シュバッ！ かわした！",col:"#FFE14D",passes:2,d:1.6,y:500,trail:"#FFE14D"}),
   clash({a:SW.thunder,b:ROBOT_R,cap:"ガギィィン！！",col:"#2D6BFF",ma:{ang:.9}}),
@@ -704,7 +707,7 @@ vid("robotwar","battle","かんた vs 巨大ロボ 最終決戦！","🤖",["#9F
   beam({a:SW.thunder,x:330,y:690,s:1.47,m:{ang:1.05},target:{a:ROBOT_R,x:1220,y:520},cap:"サンダー ブレイク！！"}),
   explode({x:1220,y:500,cap:"ドガガガーーン！！",debris:["#C8261A","#AEB6C8","#FFC928"]}),
   appear({bg:["#4A4258","#140F1E"],cap:"メカボス、ショート！",col:"#fff",sfx:SFX.robot,cast:[{a:ROBOT_R,x:1100,y:560,m:{mood:"scared",broken:true},say:"ガガ…ピー…プスン",shake:4}]}),
-  victory({cap:"かんた の 大勝利！",cast:[{a:SW.thunder,x:800,y:600,s:1.3,m:{glow:.9}}]})]);
+  victory({cap:"かんた＆ようた 大勝利！",cast:[{a:SW.thunder,x:800,y:600,s:1.3,m:{glow:.9}}]})]);
 
 vid("rocketpunch","battle","巨大ロボ ガッツンダーのロケットパンチ！","🦾",["#FFE14D","#3C6BE0"],"🦾 ガッツンダー 出動中…！",[
   appear({bgl:["#76C8FF","#E8F7FF"],cap:"ガッツンダー 出動！",col:"#FFE14D",sfx:SFX.robot,cast:[{a:ROBOT,x:500,y:540,s:1.1,from:"bottom",spd:1.3,say:"まかせろ！",sayAt:.6}],scene:T=>{ctx.fillStyle="#7FD47A";ctx.fillRect(-80,780,W+160,200)}}),
@@ -781,7 +784,7 @@ vid("meteor","space","巨大いん石 ちきゅうに せっきん！","☄️",
   appear({...SKYS.space,cap:"へいわな ちきゅう",col:"#fff",sfx:()=>tone(400,600,.6,"sine",.1),cast:[{a:EARTH,x:800,y:600,m:{spots:[[-60,-40,70,"#3FA34D"],[60,60,60,"#3FA34D"]],face:"happy"}}]}),
   appear({...SKYS.space,cap:"きょだい いん石 せっきん中！",size:84,col:"#FF4A3D",stroke:"#fff",sfx:()=>{tone(800,400,.4,"square",.1);tone(800,400,.4,"square",.1,.5);tone(800,400,.4,"square",.1,1)},cast:[{a:EARTH,x:500,y:650,s:.8,m:{spots:[[-60,-40,70,"#3FA34D"]],face:"scared"}},{a:COMET,x:1300,y:250,s:1,dx:-200,dy:80}],shake:4}),
   react({a:EARTH,s:1,cap:"ちきゅう ピンチ！！",m:{spots:[[-60,-40,70,"#3FA34D"]],face:"scared"},bg:["#FF9A9A","#3A0A0A"]}),
-  appear({bgl:["#FFE14D","#FF8A00"],cap:"そこへ… かんた 出動！",col:"#fff",stroke:"#C8261A",sfx:SFX.whoosh,cast:[{a:SW.gold,x:800,y:600,s:1.3,from:"bottom",m:{glow:1}}],spark:"#fff"}),
+  appear({bgl:["#FFE14D","#FF8A00"],cap:"そこへ… かんた＆ようた 出動！",col:"#fff",stroke:"#C8261A",sfx:SFX.whoosh,cast:[{a:SW.gold,x:800,y:600,s:1.3,from:"bottom",m:{glow:1}}],spark:"#fff"}),
   charge({a:SW.gold,x:450,y:620,s:1.2,col:"#FFE14D",cap:"ゴールデン パワー！",emo:"✨✨✨",stars:true,bolts:5}),
   beam({a:SW.gold,x:330,y:690,s:1.4,m:{ang:1.05},target:{a:COMET,x:1250,y:420},cap:"スターダスト ビーム！！",bg:["#2D1A6B","#05030F"],stars:true}),
   explode({x:1250,y:420,cap:"いん石 こなごな！！",bg:["#FFB46A","#1A0838"],stars:true,fire:["#FFE14D","#fff","#FF8A00"],debris:["#6B4A3A","#AEB6C8"]}),
@@ -842,7 +845,7 @@ vid("f1","ride","F1レース 最速バトル！","🏎️",["#FF4A3D","#1E2340"]
   appear({...SKYS.road,cap:"ならんだ！ デッドヒート！",size:84,col:"#FFE14D",sfx:()=>SFX.engine(2),shake:6,cast:[{a:CAR,x:800,y:640,s:.8,shake:4},{a:CAR_B,x:800,y:760,s:.85,m:{n:"2"},shake:4}],extra:()=>speedLines("rgba(255,255,255,.6)",30)}),
   charge({a:CAR,x:800,y:620,s:.9,col:"#FF8A3D",cap:"ターボ ブースト！！",emo:"🔥🔥",bolts:2,sfx:()=>SFX.engine(1.6)}),
   zoomPast({a:CAR,m:{n:"1"},s:1,...SKYS.road,y:690,cap:"ゴーーール！！",size:150,col:"#FFE14D",passes:1,d:1.2,trail:"#FF8A3D",cast:[{a:{draw:(x,y,s,T)=>{ctx.save();for(let i=0;i<8;i++)for(let j=0;j<6;j++){ctx.fillStyle=(i+j)%2?"#fff":"#1E2340";ctx.fillRect(x+i*30+Math.sin(T*8+i)*5,y+j*30,30,30)}ctx.restore()}},x:1200,y:300}]}),
-  victory({cap:"かんた号 ゆうしょう！",bgl:["#FFE14D","#FF4A3D"],cast:[{a:CAR,x:800,y:620,m:{n:"1"}}]})]);
+  victory({cap:"かんよ号 ゆうしょう！",bgl:["#FFE14D","#FF4A3D"],cast:[{a:CAR,x:800,y:620,m:{n:"1"}}]})]);
 
 vid("ramen","food","ラーメン 大盛り 大食いチャレンジ！","🍜",["#FFE07A","#E0302A"],"🍜 大食いチャレンジ 中…！",[
   appear({bg:["#FFE9A8","#FF8A3D"],cap:"メガ盛りラーメン 登場！",col:"#fff",stroke:"#C8261A",sfx:SFX.land,cast:[{a:FOOD.ramen,x:800,y:560,s:1.4,from:"top"}],extra:()=>{if(R()<.5)spawn(1,()=>({x:800+rr(-200,200),y:400,vx:rr(-20,20),vy:-100,life:1.6,max:1.6,size:rr(30,50),col:"#fff",alpha:.4,grow:1.5}))}}),
@@ -918,9 +921,9 @@ vid("kumon","funny","くもんの宿題 100まい チャレンジ！","📚",["#
   OLD4[1].constructor===Object?appear({bg:["#7A3A1A","#1A0A05"],cap:"ごほうびタイム！",col:"#FFE14D",stroke:"#7A1F2B",sfx:SFX.sizzle,extra:(T,p)=>{grill(T);SLICES.forEach((s,i)=>tongue(...s,p))}}):null,
   yum({cap:"がんばったあとの タン塩！",size:100,side:FOOD.tongue,ss:1})].filter(Boolean));
 
-vid("final","battle","かんた vs あくのボス 最終回！","👑",["#FFE14D","#7A1F2B"],"👑 最終決戦 生中継…！",[
+vid("final","battle","かんた＆ようた vs あくのボス 最終回！","👑",["#FFE14D","#7A1F2B"],"👑 最終決戦 生中継…！",[
   appear({bg:["#7A1F2B","#12061E"],stars:true,cap:"ついに 最終決戦！",col:"#FF6B6B",sfx:SFX.roar,shake:10,cast:[{a:BOSS,x:800,y:540,s:1.5,from:"top",spd:1.2,say:"ぜんぶ ぶっこわしてやる！",sayAt:.5,sy:250}]}),
-  vs({a:SW.gold,b:BOSS,na:"かんた",nb:"だいまおう",colA:"#FFB000",colB:"#4A2A7A"}),
+  vs({a:SW.gold,b:BOSS,na:"かんた＆ようた",nb:"だいまおう",colA:"#FFB000",colB:"#4A2A7A"}),
   appear({bg:["#4A2A7A","#000"],stars:true,cap:"だいまおうの 闇ビーム！",col:"#B48CFF",stroke:"#fff",sfx:()=>SFX.beam(1.6),shake:12,cast:[{a:BOSS,x:1200,y:500,s:1.1}],extra:(T,p)=>{bolt(1150,480,400,600,40,40*(.5+p),"#B44DFF",14)}}),
   appear({bgl:["#FFE14D","#FF8A00"],cap:"3本の剣が あつまった！",size:90,col:"#fff",stroke:"#C8261A",sfx:SFX.magic,cast:[{a:SW.thunder,x:450,y:560,from:"left",m:{glow:.8}},{a:SW.magic,x:800,y:540,from:"bottom",delay:.15,m:{glow:.8}},{a:SW.fire,x:1150,y:560,from:"right",delay:.3,m:{glow:.8}}],spark:"#fff"}),
   explode({x:800,y:420,cap:"合体！！",size:180,col:"#FFE14D",stroke:"#C8261A",c1:"#FFF6B0",c2:"#FFE14D",c3:"#FFB000",bg:["#FFF6B0","#FF8A00"],fire:["#fff","#FFE14D","#B48CFF","#FF4A3D"],debris:["#FFE14D","#FFF6B0"],sfx:()=>{SFX.magic();noise(1.5,.5,2000)}}),
@@ -929,7 +932,7 @@ vid("final","battle","かんた vs あくのボス 最終回！","👑",["#FFE14
   beam({a:SW.gold,x:330,y:690,s:1.47,m:{ang:1.05},target:{a:BOSS,x:1220,y:500,s:1.1},cap:"ファイナル ビーーム！！",w:110,d:1.8,colr:"#FFE14D",bg:["#FFF6B0","#FF8A00"],stroke:"#C8261A"}),
   explode({x:1220,y:500,cap:"超・大・爆・発！！！",emo:"💥💥💥💥",d:3,grow:.6}),
   flyAway({a:BOSS,x:1100,y:500,s:.9,cap:"だいまおう、宇宙の果てへ！",say:"お、おぼえてろ〜！"}),
-  victory({cap:"かんたチャンネル 最強！",bgl:["#FFE14D","#FF4A3D"],cast:[{a:SW.gold,x:800,y:580,s:1.4,m:{glow:1}}]})]);
+  victory({cap:"かんよチャンネル 最強！",bgl:["#FFE14D","#FF4A3D"],cast:[{a:SW.gold,x:800,y:580,s:1.4,m:{glow:1}}]})]);
 
 
 /* ================= シリーズ自動生成（バトル・グルメ・宇宙・レース） ================= */
@@ -1032,7 +1035,7 @@ const FOOD_MODES=[
  ["を ボスと とりあい！",f=>[
   appear({bg:KIT,cap:`おいしそうな ${f.n}！`,col:"#fff",stroke:"#C8261A",sfx:SFX.pop,cast:[{a:f.a,x:800,y:560,s:f.s,m:f.m,from:"zoom"}],spark:"#fff"}),
   appear({bg:["#5A1F4A","#12061E"],stars:true,cap:"あくのボスが あらわれた！",col:"#FF6B6B",sfx:SFX.laugh,cast:[{a:BOSS,x:1150,y:520,from:"top",say:`その${f.n} よこせ〜！`,sayAt:.4},{a:f.a,x:450,y:600,s:f.s*.6,m:f.m}]}),
-  vs({a:FACE,b:BOSS,na:"かんた",nb:"あくのボス",sa:.7,ma:{mood:"angry"},colA:"#FFB000",colB:"#4A2A7A"}),
+  vs({a:FACE,b:BOSS,na:"かんた＆ようた",nb:"あくのボス",sa:.7,ma:{mood:"angry"},colA:"#FFB000",colB:"#4A2A7A"}),
   clash({a:FACE,b:BOSS,ma:{mood:"angry"},sa:.6,cap:"ひっぱりあい！",col:"#FF8A3D"}),
   charge({a:FACE,y:580,s:.85,col:"#FFE14D",cap:"食いしんぼう パワー！",emo:"🔥🔥",bolts:3,m:{mood:"angry"}}),
   beam({a:FACE,x:420,y:560,s:.6,m:{mood:"fire"},target:{a:BOSS,x:1220,y:520},cap:"いただきます ビーム！！",colr:"#FF8A3D"}),
@@ -1179,13 +1182,16 @@ $("like").addEventListener("click",()=>{
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
 function renderComments(){
   const list=D().comments;
-  $("comments").innerHTML=list.length?list.slice().reverse().map(c=>`<li><div class="av">${esc(c.n[0])}</div><div class="bub"><small>${esc(c.n)}・${esc(c.d)}</small>${esc(c.c)}</div></li>`).join(""):`<li class="hint">まだコメントがないよ。一番乗りしよう！</li>`;
+  $("comments").innerHTML=list.length?list.slice().reverse().map(c=>`<li><div class="av ${c.n==="ようた"?"yo":""}">${esc(c.n[0])}</div><div class="bub"><small>${esc(c.n)}・${esc(c.d)}</small>${esc(c.c)}</div></li>`).join(""):`<li class="hint">まだコメントがないよ。一番乗りしよう！</li>`;
 }
 $("form").addEventListener("submit",e=>{
   e.preventDefault();const t=$("cin").value.trim();if(!t||cur<0)return;
-  D().comments.push({n:"かんた",c:t,d:"いま"});save();$("cin").value="";renderComments();renderMenu();
+  D().comments.push({n:WHO,c:t,d:"いま"});save();$("cin").value="";renderComments();renderMenu();
 });
-renderChips();renderMenu();renderSub();resize();
+let WHO="かんた";try{WHO=localStorage.getItem("kanyo-who")||"かんた"}catch(e){}
+function renderWho(){document.querySelectorAll("#who button").forEach(b=>b.classList.toggle("on",b.dataset.n===WHO))}
+$("who").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;WHO=b.dataset.n;try{localStorage.setItem("kanyo-who",WHO)}catch(e){}renderWho()});
+renderWho();renderChips();renderMenu();renderSub();resize();
 (document.fonts?document.fonts.load(`40px "Dela Gothic One"`):Promise.resolve()).catch(()=>{}).finally(()=>requestAnimationFrame(loop));
 </script>
 
