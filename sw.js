@@ -1,11 +1,14 @@
-// かんたチャンネル：オフラインでも見られるようにファイルを保存する
-const CACHE="kanyo-ch-v2";
-const FILES=["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png","./apple-touch-icon.png"];
-self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)));self.skipWaiting()});
-self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim()});
+// かんよチャンネル用：このファイルは今後さわらなくてOK（v3）
+const CACHE="kanyo-ch-v3";
+self.addEventListener("install",e=>{self.skipWaiting()});
+self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",e=>{
-  if(e.request.method!=="GET")return;
-  e.respondWith(caches.match(e.request).then(hit=>hit||fetch(e.request).then(res=>{
-    const copy=res.clone();caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{});return res;
-  }).catch(()=>caches.match("./index.html"))));
+  const r=e.request;if(r.method!=="GET"||!r.url.startsWith(self.location.origin))return;
+  if(r.url.includes("reset.html"))return;
+  if(r.mode==="navigate"){
+    // ページはいつもネットから。ネットがない時だけ保存版。
+    e.respondWith(fetch(r).then(res=>{if(res.ok&&!res.redirected){const c=res.clone();caches.open(CACHE).then(x=>x.put("./",c))}return res}).catch(()=>caches.match("./").then(h=>h||new Response("ネットに つながっていません",{headers:{"Content-Type":"text/plain; charset=utf-8"}}))));
+    return;
+  }
+  e.respondWith(caches.match(r).then(h=>h||fetch(r).then(res=>{if(res.ok){const c=res.clone();caches.open(CACHE).then(x=>x.put(r,c))}return res})));
 });

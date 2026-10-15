@@ -1,6 +1,6 @@
 {
-  "name": "かんたチャンネル",
-  "short_name": "かんたCh",
+  "name": "かんよチャンネル",
+  "short_name": "かんよCh",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
